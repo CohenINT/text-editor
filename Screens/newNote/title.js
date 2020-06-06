@@ -1,12 +1,18 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React,{useState} from 'react';
 import {Text, StyleSheet, View, TextInput} from 'react-native';
 
 
 export default function App() {
+  const [title,setTitle] = useState('');
+
+
     return (
       <View>
-        <TextInput multiline={true} numberOfLines={1} style={styles.title}>Hello World!! </TextInput>
+        <TextInput multiline={true} numberOfLines={1} style={styles.title}>
+         {title}
+          
+          </TextInput>
 
 
       </View>
