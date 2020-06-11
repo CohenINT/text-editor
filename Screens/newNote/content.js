@@ -11,6 +11,7 @@ export default function App() {
   function saveNote()
   {
     Alert.alert(text);
+    
   }
 
 

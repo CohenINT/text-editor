@@ -9,10 +9,12 @@ export default function App() {
 
     return (
       <View>
-        <TextInput multiline={true} numberOfLines={1} style={styles.title}>
-         {title}
-          
-          </TextInput>
+        <TextInput multiline={true} numberOfLines={1} style={styles.title}
+        onChangeText={
+          (e)=>setTitle(e)
+        }
+
+         />
 
 
       </View>
