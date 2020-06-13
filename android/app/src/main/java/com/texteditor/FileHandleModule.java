@@ -92,8 +92,15 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
             Log.e("Error exception: ", ex.toString());
         }
 
+        //TODO: add promoise values return to javascript
+
 
     }
+
+
+
+
+
     @ReactMethod
     public void WriteFile(String title,String content,Promise promise)
     {
