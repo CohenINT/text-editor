@@ -13,6 +13,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -102,10 +104,11 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void WriteFile(String title,String content,Promise promise)
+    public void WriteFile(JSONObject data, Promise promise)
     {
         String result="error in WriteFile";
-        String filename ="mytext12.txt";
+
+        String filename =data.filename;
         try{
             Log.d("kira","trying to scan files");
 
