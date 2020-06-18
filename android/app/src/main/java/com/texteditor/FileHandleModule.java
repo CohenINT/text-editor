@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import  com.texteditor.NoteModel;
 
 //TODO: return absolute path of the newly created file back to javascript.
 
@@ -106,8 +107,11 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
     @ReactMethod
     public void WriteFile(String data_json, Promise promise)
     {
+        Log.d("Note","write to file invoked");
         String result="error in WriteFile";
         NoteModel note = new NoteModel(data_json);
+       Log.d("Note",note.filename);
+
         if(note == null)
         {
             promise.reject("ERROR_JSON_CONVERT", new Exception("ERROR JSON CONVERT"));

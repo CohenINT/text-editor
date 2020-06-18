@@ -2,6 +2,8 @@ package com.texteditor;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -30,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           packages.add(new CustomToastPackage());
           packages.add(new CustomFileHandlePackage());
+          Log.d("msg","adding additioanl packages for react native");
           return packages;
         }
 

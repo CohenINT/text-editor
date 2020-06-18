@@ -17,7 +17,7 @@ public class NoteModel {
     public NoteModel(String data)
     {
         JSONObject _data=null;
-
+            Log.d("msg","creating note model instance with data string content.");
         try{
             _data= new JSONObject(data);
             this.id=_data.getString("id");
