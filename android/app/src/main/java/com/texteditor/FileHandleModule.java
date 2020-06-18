@@ -20,11 +20,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -74,10 +76,33 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void GetNotesList()
+    public void GetNotesList(Promise promise)
     {
        List<String> file_list =  getFilesList();
-        LoadNote("18.06.2020-13:34:54.json");
+       List<String>Notes_List = new ArrayList<String>();
+
+       Log.d("loading notes","****notes list****");
+       for(String item : file_list)
+       {
+            String temp=  LoadNote(item);
+            Log.d("current item",temp);
+            if(temp!=""&&temp!=null)
+             Notes_List.add(temp );
+
+       }
+
+       if(Notes_List!=null)
+       {
+           //TODO: pick a way to send back the data to react native
+           promise.resolve(Notes_List.toString());
+       }
+
+       else{
+           promise.reject("No notes were found.",new Exception("NO_NOTES_FOUND"));
+       }
+
+
+
 
     }
 

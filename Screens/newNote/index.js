@@ -17,6 +17,22 @@ export default function App() {
   const [text, setText] = useState('Im content:  text...');
 
 
+  const LoadNotes = async () => {
+    try {
+
+      let result = await FileHandle.GetNotesList();
+      console.log("GetNotesList invoked.  check result ");
+      console.log(result);
+      //TODO: parse result to it's subjective class object, to use in upcoming components.
+
+    }
+    catch (e) {
+      console.log("error, no notes found");
+      console.log(e);
+
+
+    }
+  };
   const LoadNote = async (filename = '18.06.2020-13:34:54.json') => {
 
     try {
@@ -54,7 +70,7 @@ export default function App() {
       'content': text,
 
     };
-    LoadNote();
+    LoadNotes();
     console.log(JSON.stringify(note));
 
     //Todo: inoke java function with the title as paramter
