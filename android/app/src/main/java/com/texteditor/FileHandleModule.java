@@ -110,7 +110,7 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         Log.d("Note","write to file invoked");
         String result="error in WriteFile";
         NoteModel note = new NoteModel(data_json);
-       Log.d("Note",note.filename);
+
 
         if(note == null)
         {
@@ -122,9 +122,9 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
                 OutputStream out;
                 OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(note.filename,reactContext.MODE_PRIVATE));
-                output.write("initiate first line writting to file dude.");
-                output.write("inititate second line dude");
-                output.write("inititate third line , its thursday my dudes");
+                output.write(data_json);
+                Log.d("save",data_json);
+
                 output.close();
                 result= String.format("%s,%s", reactContext.getFilesDir(), note.filename);
                 promise.resolve(result);
