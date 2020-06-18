@@ -17,10 +17,23 @@ export default function App() {
   const [text, setText] = useState('Im content:  text...');
 
 
+  const LoadNote = async (filename = '18.06.2020-13:34:54.json') => {
 
+    try {
+      let result = await FileHandle.getNote(filename);
+      console.log('LoadNote() invoked. check result: ');
+      console.log(result);
+    }
+    catch (e) {
+
+      console.log('error with loading note');
+      console.log(e);
+    }
+
+  };
   const WriteToFile = async (data) => {
     try {
-      var result = await FileHandle.WriteFile(data);
+      let result = await FileHandle.WriteFile(data);
       console.log('write to file function been called.');
       console.log(result);
     }
@@ -31,6 +44,8 @@ export default function App() {
 
   };
 
+
+
   function saveNote() {
     Alert.alert(title + ": " + text);
     const note = {
@@ -39,12 +54,12 @@ export default function App() {
       'content': text,
 
     };
-
+    LoadNote();
     console.log(JSON.stringify(note));
 
     //Todo: inoke java function with the title as paramter
-     WriteToFile(JSON.stringify(note));
-      
+    WriteToFile(JSON.stringify(note));
+
   }
 
 

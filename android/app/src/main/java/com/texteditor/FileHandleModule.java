@@ -1,5 +1,6 @@
 package com.texteditor;
 //https://stackoverflow.com/questions/14376807/read-write-string-from-to-a-file-in-android
+import android.util.JsonReader;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.google.gson.Gson;
 import  com.texteditor.NoteModel;
 
 //TODO: return absolute path of the newly created file back to javascript.
@@ -52,44 +55,63 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         String path=directory_path.getAbsolutePath();
         File directory = new File(path);
         List<File>files = Arrays.asList(directory.listFiles());
-        List<String>ListOfFiles = new ArrayList<>();
+        List<String>ListOfFiles = new ArrayList<String>();
 
-        Log.d("files_kira","***** file list ****");
+        Log.d("Note_files","***** list of notes ****");
 
         for(File item : files)
         {
-                Log.d(item.getName(),item.getName());
-                ListOfFiles.add(item.getName());
+                Log.d("item",item.getName());
+                //TODO: each item represet the json file we need to add to the list of returning list to react native.
 
+                if(item.isFile()&&item.getName().endsWith(".json")) {
+                    ListOfFiles.add(item.getName());
+
+                }
         }
         return ListOfFiles;
     }
-    @ReactMethod
-    public void getNote(String filename)
-    {//TODO: need to think of unique way to define file names like using unique id an index that have details about the file using its unique id. s
-        //for now its filename
 
-        String result;
+
+    @ReactMethod
+    public void GetNotesList()
+    {
+       List<String> file_list =  getFilesList();
+
+
+    }
+
+    @ReactMethod
+    public void getNote(String filename,Promise promise)
+    {
+
+        String result="";
         try{
 
-                InputStream input = reactContext.openFileInput(filename);
-                if(input!=null)
-                {
-                    InputStreamReader inputRead = new InputStreamReader(input);
-                    BufferedReader buffreader = new BufferedReader(inputRead);
-                    String receiveString = "";
-                    StringBuilder stringBuilder = new StringBuilder();
+            InputStream input = reactContext.openFileInput(filename);
+            if(input!=null)
+            {
+                InputStreamReader inputRead = new InputStreamReader(input);
+                BufferedReader buffreader = new BufferedReader(inputRead);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
 
-                    while((receiveString = buffreader.readLine()) != null){
-                        stringBuilder.append("\n").append(receiveString);
-
-                    }
-
-                    input.close();
-                    result = stringBuilder.toString();
-
+                while((receiveString = buffreader.readLine()) != null){
+                    stringBuilder.append("\n").append(receiveString);
 
                 }
+
+                input.close();
+                result = stringBuilder.toString() ;
+                if(result!="")
+                {
+                    promise.resolve(result);
+                }
+                else {
+                promise.reject("could not load json file.",new Exception("ERROR LOADING JSON FILE AS NOTE."));
+                }
+
+            }
 
         }
         catch (Exception ex)
@@ -114,6 +136,7 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         String filename="";
         filename=GenerateFilename();
 
+        getFilesList();
         if(note == null)
         {
             promise.reject("ERROR_JSON_CONVERT", new Exception("ERROR JSON CONVERT"));
