@@ -77,14 +77,13 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
     public void GetNotesList()
     {
        List<String> file_list =  getFilesList();
-
+        LoadNote("18.06.2020-13:34:54.json");
 
     }
 
-    @ReactMethod
-    public void getNote(String filename,Promise promise)
-    {
 
+    private String LoadNote(String filename)
+    {
         String result="";
         try{
 
@@ -102,14 +101,8 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
                 }
 
                 input.close();
-                result = stringBuilder.toString() ;
-                if(result!="")
-                {
-                    promise.resolve(result);
-                }
-                else {
-                promise.reject("could not load json file.",new Exception("ERROR LOADING JSON FILE AS NOTE."));
-                }
+              return stringBuilder.toString() ;
+
 
             }
 
@@ -118,6 +111,25 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         {
             Log.e("Error exception: ", ex.toString());
         }
+
+        return result;
+    }
+    @ReactMethod
+    public void getNote(String filename,Promise promise)
+    {
+       String note = LoadNote(filename);
+
+       if(note==""||note==null)
+       {
+           Log.e("Error","error in loading note "+filename);
+           promise.reject("ERROR LOADING NOTE- "+filename,new Exception("ERROR LOADING NOTE"));
+           return;
+       }
+       promise.resolve(note);
+
+
+
+
 
 
 
