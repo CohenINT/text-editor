@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import  com.texteditor.NoteModel;
 
 //TODO: return absolute path of the newly created file back to javascript.
 
@@ -104,20 +105,21 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void WriteFile(JSONObject data, Promise promise)
-    {
+    public void WriteFile(String data_json, Promise promise) {
         String result="error in WriteFile";
-
-        String filename =data.filename;
+        NoteModel note = new NoteModel(data_json);
+        if(note==null)
+        {
+        promise.resolve("ERROR IN CREATING NOTE MODEL OBJECT");
+        }
         try{
-            Log.d("kira","trying to scan files");
 
                 OutputStream out;
-                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(filename,reactContext.MODE_PRIVATE));
+                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(note.FileName,reactContext.MODE_PRIVATE));
                 output.write("initiate first line writting to file dude.");
                 output.write("inititate second line dude");
                 output.close();
-             result= String.format("%s,%s", reactContext.getFilesDir(), filename);
+             result= String.format("%s,%s", reactContext.getFilesDir(), note.FileName);
             promise.resolve(result);
 
 
