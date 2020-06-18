@@ -37,7 +37,6 @@ export default function App() {
       'id': 'uuid123',//TODO: generate uuid , on the native code it would be used for index
       'title': title,
       'content': text,
-      'filename':'fileAmazing2.json', //TODO: define filename using uuid with date or something.
 
     };
 

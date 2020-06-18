@@ -23,7 +23,7 @@ public class NoteModel {
             this.id=_data.getString("id");
             this.title=_data.getString("title");
             this.content=_data.getString("content");
-            this.filename=_data.getString("filename");
+
 
 
         }

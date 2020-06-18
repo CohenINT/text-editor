@@ -19,8 +19,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import  com.texteditor.NoteModel;
@@ -47,7 +49,7 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
     public List<String>getFilesList()
     {
-        String path=reactContext.getFilesDir().getAbsolutePath();
+        String path=directory_path.getAbsolutePath();
         File directory = new File(path);
         List<File>files = Arrays.asList(directory.listFiles());
         List<String>ListOfFiles = new ArrayList<>();
@@ -95,7 +97,6 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
             Log.e("Error exception: ", ex.toString());
         }
 
-        //TODO: add promoise values return to javascript
 
 
     }
@@ -110,7 +111,8 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         Log.d("Note","write to file invoked");
         String result="error in WriteFile";
         NoteModel note = new NoteModel(data_json);
-
+        String filename="";
+        filename=GenerateFilename();
 
         if(note == null)
         {
@@ -121,12 +123,12 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
                 Log.d("kira","trying to scan files");
 
                 OutputStream out;
-                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(note.filename,reactContext.MODE_PRIVATE));
+                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(filename,reactContext.MODE_PRIVATE));
                 output.write(data_json);
                 Log.d("save",data_json);
 
                 output.close();
-                result= String.format("%s,%s", reactContext.getFilesDir(), note.filename);
+                result= String.format("%s,%s", reactContext.getFilesDir(),filename);
                 promise.resolve(result);
 
 
@@ -134,13 +136,17 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
         catch (Exception ex)
         {
               promise.reject("ERROR_CANT_SAVE_FILE_MOSHE",ex);
-
-
         }
 
 
 
 
+    }
+
+    private String GenerateFilename() {
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
+        return ft.format(date)+".json";
     }
 
 
