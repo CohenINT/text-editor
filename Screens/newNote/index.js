@@ -37,12 +37,12 @@ export default function App() {
       'id': 'uuid123',//TODO: generate uuid , on the native code it would be used for index
       'title': title,
       'content': text,
-      'filename':'file' + (Math.floor( Math.random() * 100))//TODO: define filename using uuid with date or something.
+      'filename':'fileAmazing.txt', //TODO: define filename using uuid with date or something.
 
     };
     //Todo: inoke java function with the title as paramter
       WriteToFile(note);
-
+      
   }
 
 

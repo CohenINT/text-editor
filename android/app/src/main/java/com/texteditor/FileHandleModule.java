@@ -104,21 +104,26 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void WriteFile(JSONObject data, Promise promise)
+    public void WriteFile(String data_json, Promise promise)
     {
         String result="error in WriteFile";
+        NoteModel note = new NoteModel(data_json);
+        if(note == null)
+        {
+            promise.reject("ERROR_JSON_CONVERT", new Exception("ERROR JSON CONVERT"));
+        }
 
-        String filename =data.filename;
         try{
-            Log.d("kira","trying to scan files");
+                Log.d("kira","trying to scan files");
 
                 OutputStream out;
-                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(filename,reactContext.MODE_PRIVATE));
+                OutputStreamWriter output = new OutputStreamWriter(reactContext.openFileOutput(note.filename,reactContext.MODE_PRIVATE));
                 output.write("initiate first line writting to file dude.");
                 output.write("inititate second line dude");
+                output.write("inititate third line , its thursday my dudes");
                 output.close();
-             result= String.format("%s,%s", reactContext.getFilesDir(), filename);
-            promise.resolve(result);
+                result= String.format("%s,%s", reactContext.getFilesDir(), note.filename);
+                promise.resolve(result);
 
 
         }
