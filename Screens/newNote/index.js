@@ -24,7 +24,7 @@ export default function App() {
       console.log("GetNotesList invoked.  check result ");
       console.log(result);
       //TODO: parse result to it's subjective class object, to use in upcoming components.
-
+      
     }
     catch (e) {
       console.log("error, no notes found");
@@ -70,7 +70,6 @@ export default function App() {
       'content': text,
 
     };
-    LoadNotes();
     console.log(JSON.stringify(note));
 
     //Todo: inoke java function with the title as paramter

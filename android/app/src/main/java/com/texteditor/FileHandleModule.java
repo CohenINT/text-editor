@@ -63,10 +63,9 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
 
         for(File item : files)
         {
-                Log.d("item",item.getName());
-                //TODO: each item represet the json file we need to add to the list of returning list to react native.
-
+            
                 if(item.isFile()&&item.getName().endsWith(".json")) {
+                    Log.d("item",item.getName());
                     ListOfFiles.add(item.getName());
 
                 }
@@ -85,7 +84,7 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
        for(String item : file_list)
        {
             String temp=  LoadNote(item);
-            Log.d("current item",temp);
+            Log.d("current_item",temp);
             if(temp!=""&&temp!=null)
              Notes_List.add(temp );
 
@@ -188,7 +187,7 @@ public class FileHandleModule extends  ReactContextBaseJavaModule {
                 Log.d("save",data_json);
 
                 output.close();
-                result= String.format("%s,%s", reactContext.getFilesDir(),filename);
+                result= "Note saved. "+filename;
                 promise.resolve(result);
 
 
