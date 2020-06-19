@@ -14,7 +14,7 @@ export default function App(props) {
       onChangeText={
         (e)=>props.setContentValue(e)
       }
-
+          
      />
 
   

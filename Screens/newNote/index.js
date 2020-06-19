@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, Alert } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import Title from './title';
 import Content from './content';
 import ToastExample from './ToastExample';
@@ -63,7 +63,6 @@ export default function App() {
 
 
   function saveNote() {
-    Alert.alert(title + ": " + text);
     const note = {
       'id': 'uuid123',//TODO: generate uuid , on the native code it would be used for index
       'title': title,

@@ -12,7 +12,7 @@ export default function App(props) {
         onChangeText={
           (e)=>props.setTitleValue(e)
         }
-
+          
          />
 
 
